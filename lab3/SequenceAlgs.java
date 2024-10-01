@@ -15,10 +15,21 @@ public class SequenceAlgs<E> {
 	 */
 	
 	public boolean isPalindrome (Sequence<E> S) {
+		if (S.isEmpty()) return true;
 		
 		// ***** add your code here  *******************
-		
-		return true;
+		Position<E> tail = S.last();
+		Position<E> lead = S.first();
+		while (true) {
+			if (tail.getElement() != lead.getElement()) {
+				return false;
+			}
+			tail = S.before(tail);
+			lead = S.after(lead);
+			if (tail == lead || S.after(lead) == tail) {
+				return true;
+			}
+		}
  		
 	}
 	
@@ -34,9 +45,19 @@ public class SequenceAlgs<E> {
 	 */
 	
 	public void inplaceReverse(Sequence<E> S) {
+		if (S.isEmpty()) return;
 		
 		// ***** add your code here  *******************
-		
+		Position<E> tail = S.last();
+		Position<E> lead = S.first();
+
+		while (tail != lead && S.after(lead) != tail) {
+			E temp = S.set(lead, tail.getElement());
+			S.set(tail, temp);
+			
+			tail = S.before(tail);
+			lead = S.after(lead);
+		}
 	}
 	
 	/**
@@ -71,16 +92,16 @@ public class SequenceAlgs<E> {
 		for (int i=0;i<20;i++) S.addLast(2*i);
         	System.out.println("Sequence:\n"+S);
         	System.out.println("Is palindrome?="+tester.isPalindrome(S));
-        	tester.inplaceKReverse(S,3);
-        	System.out.println("After 3 reversal:\n"+S);
+        	// tester.inplaceKReverse(S,3);
+        	// System.out.println("After 3 reversal:\n"+S);
         	tester.inplaceReverse(S);
         	System.out.println("After  reversal\n"+S);
         	System.out.println("Is palindrome?="+tester.isPalindrome(S));
         	for (int i=19;i>=10;i--) S.set(i,S.get(19-i));
         	System.out.println("After Update\n"+S);
         	System.out.println("Is palindrome?="+tester.isPalindrome(S));
-        	tester.inplaceKReverse(S,5);
-        	System.out.println("After 5 reversal\n"+S);
+        	// tester.inplaceKReverse(S,5);
+        	// System.out.println("After 5 reversal\n"+S);
         
 	}
 	
